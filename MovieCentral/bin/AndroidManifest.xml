@@ -17,6 +17,19 @@
             android:name="com.cs275.moviecentral.MovieDetail"
             android:label="@string/title_activity_movie_detail" >
         </activity>
+        <activity
+            android:name="com.cs275.moviecentral.MainActivity"
+            android:label="@string/title_activity_main" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.cs275.moviecentral.ReviewsActivity"
+            android:label="@string/title_activity_reviews" >
+        </activity>
     </application>
 
 </manifest>
