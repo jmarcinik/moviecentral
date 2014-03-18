@@ -3,9 +3,10 @@
 
     <string name="app_name">MovieCentral</string>
     <string name="title_activity_movie_detail">Movie Details</string>
-    <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_main">Movie Central</string>
     <string name="title_activity_reviews">Reviews &amp; Ratings</string>
-
+	<string name="action_settings">Settings</string>
+	<string name="hinter">Search for a movie!</string>
+	
 </resources>

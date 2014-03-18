@@ -1,35 +1,63 @@
 package com.cs275.moviecentral;
+import java.util.ArrayList;
 
-import android.os.Bundle;
 import android.app.Activity;
-import android.content.Intent;
+//import android.support.v7.app.ActionBarActivity;
+//import android.support.v7.app.ActionBar;
+import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.os.Build;
 
 public class MainActivity extends Activity {
 
+	static ListView movies_list;
+	static Editable text;
+	static EditText search;
+	static TextView seqView;
+	static ArrayAdapter<String> adapter;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		search = (EditText) findViewById(R.id.searchbar);
+		text = search.getText();
+		seqView = (TextView) findViewById(R.id.tester);
+		//Button clicker = (Button) findViewById(R.id.search);
 		
-/*
-		// Test for Review intent
-		Intent intent = new Intent(this, ReviewsActivity.class);
-		Bundle bundle = new Bundle();
-		bundle.putString("title", "Toy Story 3");
-		//bundle.putString("year", "2010");	// year is not required.
-		intent.putExtras(bundle);
-	    startActivity(intent);
-*/
-
+		ArrayList<String> MovieTitles = new ArrayList<String>();
+		
+		movies_list = (ListView) findViewById(R.id.movies_list);
+		
+		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, MovieTitles);
+		
+		movies_list.setAdapter(adapter);
+		adapter.setNotifyOnChange(true);
+		
+		System.out.println("HERE !---------------------------");
+		
+		
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
+	
+	public void searchForMovies(View v){
+		
+		System.out.print("HERE 2---------------------");
+		GetMovies myTask = new GetMovies();
+		myTask.execute();
 	}
 
 }
+
+
+
