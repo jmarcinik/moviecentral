@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 public class MovieDetail extends Activity 
@@ -17,6 +18,7 @@ public class MovieDetail extends Activity
 	static TextView movieName;
 	static TextView movieYear;
 	static EditText desc;
+	static RatingBar rating;
 		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -30,6 +32,7 @@ public class MovieDetail extends Activity
 		movieName = (TextView)this.findViewById(R.id.textView1);
 		movieYear = (TextView)this.findViewById(R.id.textView2);
 		desc = (EditText)this.findViewById(R.id.editText1);
+		rating = (RatingBar)this.findViewById(R.id.ratingBar1);
 		
 		GetMovieDetailsTask task = new GetMovieDetailsTask();
 		task.execute();

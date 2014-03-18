@@ -97,6 +97,7 @@ public class ReviewsActivity extends Activity {
 		title = title.replace(" ", "+");
 		List<RottenTomatoesReview> reviews = new ArrayList<RottenTomatoesReview>();
 		String movieURI = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey=" + rt_apikey + "&q=" + title + "&page_limit=3";
+		movieURI = movieURI.replace(" ", "%20");		
 		Log.i("TEST", movieURI);
 		String stringEntity = null;
 
@@ -112,7 +113,10 @@ public class ReviewsActivity extends Activity {
 			for(int i=0; i<movies.length(); i++) {
 				JSONObject m = movies.getJSONObject(i);
 				if(year.equals(m.getString("year")))
+				{
 					theMovie = m;
+					break;
+				}
 			}
 
 			// Take the first one if there is no exact matching found
