@@ -15,16 +15,16 @@ import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 
 @SuppressLint("NewApi")
-public class GetMovies extends AsyncTask<Void, Void, ArrayList<String>> {
+public class GetMovies extends AsyncTask<Void, Void, Void> {
 	
-	ArrayList<String> result;
+	ArrayList<MovieInfo> result;
 	
 	@Override
-	protected ArrayList<String> doInBackground(Void... params) {
+	protected Void doInBackground(Void... params) {
 		
 		//ArrayList<String> result = new ArrayList<String>();
 		
-		result = new ArrayList<String>();
+		result = new ArrayList<MovieInfo>();
 		String sURL = "http://www.omdbapi.com/?s=" + MainActivity.text.toString();
 		
 		sURL = sURL.replaceAll(" ", "%20");
@@ -42,16 +42,20 @@ public class GetMovies extends AsyncTask<Void, Void, ArrayList<String>> {
 			
 			for(int i = 0; i < rootobj.size(); i++)
 			{
+				String title = rootobj.get(i).getAsJsonObject().get("Title").getAsString();
+				String id = rootobj.get(i).getAsJsonObject().get("imdbID").getAsString();
+								
+				MovieInfo info = new MovieInfo(title, id);
 				
-				
-				result.add(rootobj.get(i).getAsJsonObject().get("Title").getAsString());
+				result.add(info);
 			}
+			
 			for(int i = 0; i < result.size(); i++)
-		{
-			System.out.println(result.get(i));
-		}
+			{
+				System.out.println(result.get(i));
+			}
 			//titles.equals(result);
-			return result;
+			return null;
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -65,13 +69,23 @@ public class GetMovies extends AsyncTask<Void, Void, ArrayList<String>> {
 		return null;
 	}
 	
-	@Override
-	protected void onPostExecute(ArrayList<String> arg0)
+	protected void onPostExecute(Void param)
 	{
 		System.out.println("CALLED POST");
 	
+		String[] ids = new String[result.size()];
+		String[] names = new String[result.size()];
+		
+		for(int i = 0; i < result.size(); i++)
+		{
+			ids[i] = result.get(i).getID();
+			names[i] = result.get(i).getName();
+		}
+		
+		MainActivity.ids = ids;
+		
 		MainActivity.adapter.clear();
-		MainActivity.adapter.addAll(result);
+		MainActivity.adapter.addAll(names);
 		MainActivity.adapter.notifyDataSetChanged();
 		
 	}

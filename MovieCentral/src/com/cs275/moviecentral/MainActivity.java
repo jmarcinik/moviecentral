@@ -2,6 +2,7 @@ package com.cs275.moviecentral;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Intent;
 //import android.support.v7.app.ActionBarActivity;
 //import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +30,8 @@ public class MainActivity extends Activity {
 	static EditText search;
 	static TextView seqView;
 	static ArrayAdapter<String> adapter;
+	static String[] ids;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,6 +49,20 @@ public class MainActivity extends Activity {
 		
 		movies_list.setAdapter(adapter);
 		adapter.setNotifyOnChange(true);
+		
+		movies_list.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) 
+			{
+				String id = ids[arg2];
+				
+				Intent startDetailView = new Intent(arg1.getContext(), MovieDetail.class);
+				startDetailView.putExtra("ID", id);
+				startActivity(startDetailView);
+			}
+			
+		});
 		
 		System.out.println("HERE !---------------------------");
 		

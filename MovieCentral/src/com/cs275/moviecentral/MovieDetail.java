@@ -2,14 +2,52 @@ package com.cs275.moviecentral;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-public class MovieDetail extends Activity {
-
+public class MovieDetail extends Activity 
+{
+	static String id;
+	static ImageView img;
+	static TextView movieName;
+	static TextView movieYear;
+	static EditText desc;
+		
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) 
+	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_movie_detail);
+		
+		id = getIntent().getStringExtra("ID");
+		
+		img = (ImageView)this.findViewById(R.id.imageView1);
+		movieName = (TextView)this.findViewById(R.id.textView1);
+		movieYear = (TextView)this.findViewById(R.id.textView2);
+		desc = (EditText)this.findViewById(R.id.editText1);
+		
+		GetMovieDetailsTask task = new GetMovieDetailsTask();
+		task.execute();
+		
+		TextView tv = (TextView)this.findViewById(R.id.textView4);
+		tv.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) 
+			{
+				Intent startReviewsAct = new Intent(arg0.getContext(), ReviewsActivity.class);
+				startReviewsAct.putExtra("title", movieName.getText());
+				startReviewsAct.putExtra("year", movieYear.getText());
+				startActivity(startReviewsAct);
+				
+			}
+			
+		});
 	}
 
 	@Override
